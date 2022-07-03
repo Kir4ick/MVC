@@ -3,7 +3,7 @@ namespace Src;
 use Src\Router\Router;
 
 
-//Класс для инициализации приложения, зпускает роутинг
+//Класс для инициализации приложения, запускает роутинг
 class App
 {
     private static $init = false;
