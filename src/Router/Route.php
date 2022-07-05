@@ -5,42 +5,53 @@ use Src\Contracts\Routing\Routing;
 
 class Route implements Routing
 {
-    private static $routes = [
-        'POST' => [],
-        'GET' => [],
-        'PUT' => [],
-        'DELETE' => [],
-        'PATCH' => []
-    ];
+    private static $api = [];
+
+    private static $web = [];
 
     public static function post(string $uri, $function)
     {
-        Self::$routes['POST'] = ['uri' => $uri, 'function' => $function];
+        return ['uri' => $uri, 'function' => $function, 'method' => 'POST'];
+
     }
 
     public static function get(string $uri, $function)
     {
-        Self::$routes['GET'] = ['uri' => $uri, 'function' => $function];
+        return ['uri' => $uri, 'function' => $function, 'method' => 'GET'];
     }
 
     public static function put(string $uri, $function)
     {
-        Self::$routes['PUT'] = ['uri' => $uri, 'function' => $function];
+        return ['uri' => $uri, 'function' => $function, 'method' => 'PUT'];
     }
 
     public static function patch(string $uri, $function)
     {
-        Self::$routes['PATCH'] = ['uri' => $uri, 'function' => $function];
+        return ['uri' => $uri, 'function' => $function, 'method' => 'PATCH'];
     }
 
     public static function delete(string $uri, $function)
     {
-        Self::$routes['DELETE'] = ['uri' => $uri, 'function' => $function];
+        return ['uri' => $uri, 'function' => $function, 'method' => 'DELETE'];
     }
 
-
     public static function getRoutes(){
-        return Self::$routes;
+        return [
+            'api' => Self::$api,
+            'web' => Self::$web
+        ];
+    }
+
+    public static function redirect($uri){
+        header('location: '.$uri);
+    }
+
+    public static function ApiGroup($function){
+       array_push(Self::$api, call_user_func($function));
+    }
+
+    public static function WebGroup($function){
+        array_push(Self::$web, call_user_func($function));
     }
 
     private function __construct(){}

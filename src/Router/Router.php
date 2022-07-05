@@ -17,25 +17,34 @@ class Router implements Rout
 
     public function run():void
     {
-        foreach ($this->routes as $key => $route){
+        foreach ($this->routes as $method => $value){
+            if($method == 'api'){
+                header("Access-Control-Allow-Origin: *");
+                header("Content-Type: application/json; charset=UTF-8");
+                $this->action($value[0]);
+            }else{
+                header('Content-type: text/html');
+                $this->action($value[0]);
+            }
+        }
+        http_response_code(404);
+    }
+
+    private function action($routes){
+        foreach ($routes as $route){
             if(count($route) == 0){
                 continue;
             }
-            if($this->valid($route, $key)){
+            if($this->valid($route)){
                 call_user_func($route['function']);
-            }else{
-                http_response_code(404);
+                exit();
             }
         }
     }
 
+    private function valid(array $route):bool{
 
-
-    private function valid(array $route, string $key):bool{
-        return preg_match('~'.$route['uri'].'~','~/'.$_SERVER['REQUEST_URI'].'~') && $key == $_SERVER['REQUEST_METHOD'];
-    }
-
-    public static function redirect($uri){
-        header($uri);
+        return preg_match('~'.$route['uri'].'(?![a-z])'.'~','~/'.$_SERVER['REQUEST_URI'].'~') &&
+            $route['method'] == $_SERVER['REQUEST_METHOD'];
     }
 }

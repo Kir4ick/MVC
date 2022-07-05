@@ -2,7 +2,6 @@
 namespace Src;
 use Src\Router\Router;
 
-
 //Класс для инициализации приложения, запускает роутинг
 class App
 {
@@ -11,7 +10,7 @@ class App
     public function __construct()
     {
         require_once 'routes.php';
-        Self::init();
+        $this->init();
     }
 
 
@@ -21,7 +20,7 @@ class App
         }
     }
 
-    public function init(){
+    private function init(){
         if (!Self::$init){
             Self::$init = true;
             $router = new Router();

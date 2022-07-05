@@ -12,7 +12,6 @@ use Src\View\View;
 </head>
 <body>
     <?php View::getBlock('blocks/menu'); ?>
-    <h1>Привет мир!</h1>
-    <?php View::getBlock('blocks/menu'); ?>
+    <?php View::getBlock('blocks/content');?>
 </body>
 </html>
