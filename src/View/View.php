@@ -2,7 +2,9 @@
 
 namespace Src\View;
 
-class View
+use Src\Contracts\Response;
+
+class View implements Response
 {
     private static $temp = 'views/templates/';
 
@@ -11,12 +13,15 @@ class View
     public function __construct($name)
     {
         $this->file = Self::$temp.$name.'.php';
-        require_once $this->file;
     }
 
     public static function getBlock($name){
         require Self::$temp.$name.'.php';
     }
 
+    public function init()
+    {
+        require_once $this->file;
+    }
 
 }

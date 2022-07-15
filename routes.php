@@ -3,18 +3,17 @@ use Src\Router\Route;
 use Src\View\View;
 use Src\Controller\WebController;
 use App\testcontroller;
-
+use Src\Response\Response;
 /*
  * Группа роутов для построения апи
  */
 Route::ApiGroup(function (){
     return [
-        Route::get('/login', function (){
-            echo json_encode(['message' => 'true']);
+        Route::get('/login/([a-z]+)', function ($massage){
+            return new Response(['message' => ['new massage' => $massage]], 200);
         }),
 
-        Route::get('/auth',  [new testcontroller(), 'test']),
-
+        Route::get('/auth/([0-9]+)/([0-9]+)',  [new testcontroller(), 'test']),
     ];
 });
 
@@ -24,7 +23,7 @@ Route::ApiGroup(function (){
 Route::WebGroup(function (){
     return [
     Route::get('/', function (){
-        $view = new View('index');
+        return new View('index');
     })
 
     ];

@@ -2,7 +2,7 @@
 
 namespace Src\Controller;
 
-class WebController
+abstract class Controller
 {
 
 }

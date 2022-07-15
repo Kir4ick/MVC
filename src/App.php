@@ -23,8 +23,14 @@ class App
     private function init(){
         if (!Self::$init){
             Self::$init = true;
+
             $router = new Router();
-            $router->run();
+
+            $resp = $router->run();
+
+            if($resp != null){
+                $resp->init();
+            }
         }
     }
 }
